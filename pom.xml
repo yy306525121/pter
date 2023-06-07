@@ -20,7 +20,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <mybatis-starter.version>3.0.2</mybatis-starter.version>
+        <hutool-all.version>5.8.16</hutool-all.version>
     </properties>
     <dependencies>
         <dependency>
@@ -47,7 +48,12 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.2</version>
+            <version>${mybatis-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
         </dependency>
     </dependencies>
 

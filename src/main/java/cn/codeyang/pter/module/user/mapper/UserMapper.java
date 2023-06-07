@@ -1,6 +1,6 @@
 package cn.codeyang.pter.module.user.mapper;
 
-import cn.codeyang.pter.module.user.domain.User;
+import cn.codeyang.pter.module.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

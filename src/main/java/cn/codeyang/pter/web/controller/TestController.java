@@ -1,7 +1,7 @@
 package cn.codeyang.pter.web.controller;
 
 import cn.codeyang.pter.common.core.util.R;
-import cn.codeyang.pter.module.user.domain.User;
+import cn.codeyang.pter.module.user.entity.User;
 import cn.codeyang.pter.module.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class TestController {
 
     @GetMapping("/users")
     public R<List<User>> listUser() {
-        List<User> userList = userMapper.list();
-        return R.ok(userList);
+        List<User> userEntityList = userMapper.list();
+        return R.ok(userEntityList);
     }
 }
