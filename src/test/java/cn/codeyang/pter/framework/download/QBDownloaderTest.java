@@ -4,6 +4,7 @@ import cn.codeyang.pter.config.RetrofitReceiveCookieInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -17,10 +18,13 @@ import java.io.IOException;
 @SpringBootTest
 public class QBDownloaderTest {
 
+    @Autowired
+    private RetrofitReceiveCookieInterceptor retrofitReceiveCookieInterceptor;
+
     @Test
     public void login() throws IOException {
         OkHttpClient.Builder client = new OkHttpClient.Builder()
-                .addInterceptor(new RetrofitReceiveCookieInterceptor());
+                .addInterceptor(retrofitReceiveCookieInterceptor);
 
 
         Retrofit retrofit = new Retrofit.Builder()

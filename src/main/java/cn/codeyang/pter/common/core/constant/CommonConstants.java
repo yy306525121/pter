@@ -14,4 +14,9 @@ public interface CommonConstants {
      */
     Integer FAIL = 1;
 
+    /**
+     * 下载器token
+     */
+    String DOWNLOADER_TOKEN_KEY = "downloader:";
+
 }
