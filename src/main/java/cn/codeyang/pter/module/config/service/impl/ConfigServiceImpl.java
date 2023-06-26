@@ -1,0 +1,51 @@
+package cn.codeyang.pter.module.config.service.impl;
+
+import cn.codeyang.pter.common.core.constant.CacheConstants;
+import cn.codeyang.pter.module.config.entity.Config;
+import cn.codeyang.pter.module.config.mapper.ConfigMapper;
+import cn.codeyang.pter.module.config.service.ConfigService;
+import cn.hutool.core.util.StrUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author yangzy
+ */
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class ConfigServiceImpl implements ConfigService {
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final ConfigMapper configMapper;
+
+    @Override
+    public boolean selectCaptchaEnabled() {
+        return false;
+    }
+
+    @Override
+    public String selectConfigByKey(String configKey) {
+        String configValue = (String) redisTemplate.opsForValue().get(getCacheKey(configKey));
+        if (StrUtil.isNotEmpty(configValue)) {
+            return configValue;
+        }
+        Config config = configMapper.selectConfig(configKey);
+        if (config != null) {
+            redisTemplate.opsForValue().set(getCacheKey(configKey), config.getConfigValue());
+            return config.getConfigValue();
+        }
+        return StrUtil.EMPTY;
+    }
+
+    /**
+     * 设置cache key
+     *
+     * @param configKey 参数键
+     * @return 缓存键key
+     */
+    private String getCacheKey(String configKey) {
+        return CacheConstants.SYS_CONFIG_KEY + configKey;
+    }
+}

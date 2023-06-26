@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * @author yangzy
@@ -18,4 +19,7 @@ public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
+    private String loginIp;
+
+    private LocalDate loginDate;
 }
