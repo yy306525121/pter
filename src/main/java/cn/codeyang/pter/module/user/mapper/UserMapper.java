@@ -16,6 +16,6 @@ public interface UserMapper {
     @Select("SELECT * FROM t_user where username = #{username}")
     User selectByUsername(String username);
 
-    @Update("update t_user set login_ip = #{user.loginIp}, login_date = #{user.loginDate} where id = #{user.id}}")
+    @Update("update t_user set login_ip = #{loginIp}, login_date = #{loginDate} where id = #{id}")
     void updateUserProfile(User user);
 }

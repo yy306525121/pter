@@ -3,7 +3,7 @@ create table t_user
     id       int auto_increment
         primary key,
     username varchar(32) not null,
-    password varchar(32) not null,
+    password varchar(200) not null,
     login_ip varchar(30) null comment '最后登录IP'
 ) comment '用户表';
 

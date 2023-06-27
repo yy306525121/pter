@@ -32,5 +32,10 @@ public interface CommonConstants {
     /**
      * 令牌前缀
      */
-    public static final String TOKEN_PREFIX = "Bearer ";
+    String TOKEN_PREFIX = "Bearer ";
+
+    /**
+     * 资源映射路径 前缀
+     */
+    String RESOURCE_PREFIX = "/profile";
 }

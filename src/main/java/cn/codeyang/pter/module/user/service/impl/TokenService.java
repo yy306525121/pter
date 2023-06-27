@@ -63,6 +63,7 @@ public class TokenService {
                 LoginUser user = (LoginUser) redisTemplate.opsForValue().get(userKey);
                 return user;
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return null;

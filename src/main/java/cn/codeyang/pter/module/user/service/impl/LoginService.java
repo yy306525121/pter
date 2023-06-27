@@ -7,7 +7,6 @@ import cn.codeyang.pter.common.exception.BizException;
 import cn.codeyang.pter.common.exception.user.CaptchaException;
 import cn.codeyang.pter.common.exception.user.CaptchaExpireException;
 import cn.codeyang.pter.common.exception.user.UserPasswordNotMatchException;
-import cn.codeyang.pter.common.utils.MessageUtils;
 import cn.codeyang.pter.common.utils.ServletUtils;
 import cn.codeyang.pter.common.utils.ip.IpUtils;
 import cn.codeyang.pter.framework.security.context.AuthenticationContextHolder;
@@ -16,7 +15,6 @@ import cn.codeyang.pter.module.user.entity.User;
 import cn.codeyang.pter.module.user.service.UserService;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +32,7 @@ import java.time.LocalDate;
  */
 @Component
 @RequiredArgsConstructor
-public class SysLoginService {
+public class LoginService {
     private final TokenService tokenService;
 
     private final AuthenticationManager authenticationManager;

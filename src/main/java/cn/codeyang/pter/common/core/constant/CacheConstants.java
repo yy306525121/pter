@@ -23,4 +23,9 @@ public interface CacheConstants {
      * 参数管理 cache key
      */
     String SYS_CONFIG_KEY = "sys_config:";
+
+    /**
+     * 防重提交 redis key
+     */
+    String REPEAT_SUBMIT_KEY = "repeat_submit:";
 }
