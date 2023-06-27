@@ -1,10 +1,11 @@
 create table t_user
 (
-    id       int auto_increment
+    id         int auto_increment
         primary key,
-    username varchar(32) not null,
-    password varchar(200) not null,
-    login_ip varchar(30) null comment '最后登录IP'
+    username   varchar(32)  not null,
+    password   varchar(200) not null,
+    login_ip   varchar(30)  null comment '最后登录IP',
+    login_time timestamp null comment '最后登录时间'
 ) comment '用户表';
 
 create table t_site
@@ -47,11 +48,12 @@ create table t_client
     auto_delete_cron        varchar(32) default '0 0/1 * * * ?' comment '主动删种cron表达式，默认每分钟一次'
 ) comment '下载器表';
 
-create table t_config (
-                          id int auto_increment primary key ,
-                          config_name varchar(100) default '' comment '参数名称',
-                          config_key varchar(100) default '' comment '参数键名',
-                          config_value varchar(100) default '' comment '参数键值',
-                          config_type varchar(100) default 'N' comment '系统内置（Y:是 N:否）',
-                          remark varchar(500) default null comment '备注'
+create table t_config
+(
+    id           int auto_increment primary key,
+    config_name  varchar(100) default '' comment '参数名称',
+    config_key   varchar(100) default '' comment '参数键名',
+    config_value varchar(100) default '' comment '参数键值',
+    config_type  varchar(100) default 'N' comment '系统内置（Y:是 N:否）',
+    remark       varchar(500) default null comment '备注'
 ) comment '参数配置表';
