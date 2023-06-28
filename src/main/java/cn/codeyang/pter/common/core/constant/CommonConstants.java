@@ -38,4 +38,9 @@ public interface CommonConstants {
      * 资源映射路径 前缀
      */
     String RESOURCE_PREFIX = "/profile";
+
+    /**
+     * 验证码有效期（分钟）
+     */
+    Integer CAPTCHA_EXPIRATION = 3;
 }

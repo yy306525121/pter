@@ -4,6 +4,7 @@ import cn.codeyang.pter.common.core.constant.CacheConstants;
 import cn.codeyang.pter.module.config.entity.Config;
 import cn.codeyang.pter.module.config.mapper.ConfigMapper;
 import cn.codeyang.pter.module.config.service.ConfigService;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,11 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public boolean selectCaptchaEnabled() {
-        return false;
+        String captchaEnabled = selectConfigByKey("sys.account.captchaEnabled");
+        if (StrUtil.isEmpty(captchaEnabled)) {
+            return true;
+        }
+        return Convert.toBool(captchaEnabled);
     }
 
     @Override

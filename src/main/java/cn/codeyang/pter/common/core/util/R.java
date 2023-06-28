@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * 响应信息主体
@@ -35,11 +36,11 @@ public class R<T> implements Serializable {
 
 
     public static <T> R<T> ok() {
-        return restResult(null, CommonConstants.SUCCESS, null);
+        return restResult(null, CommonConstants.SUCCESS, "success");
     }
 
     public static <T> R<T> ok(T data) {
-        return restResult(data, CommonConstants.SUCCESS, null);
+        return restResult(data, CommonConstants.SUCCESS, "success");
     }
 
     public static <T> R<T> ok(T data, String msg) {

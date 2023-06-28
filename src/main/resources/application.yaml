@@ -18,6 +18,8 @@ spring:
     basename: i18n/messages
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 user:
   password:
@@ -33,3 +35,5 @@ token:
   expireTime: 30
   # 是否限制多端登录
   soloLogin: true
+pter:
+  captchaType: math

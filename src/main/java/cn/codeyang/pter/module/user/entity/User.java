@@ -1,6 +1,7 @@
 package cn.codeyang.pter.module.user.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 @Mapper
 public class User implements Serializable {
     private Long id;
+    private String nickName;
     private String username;
+    @JsonIgnore
     private String password;
     private String loginIp;
 
