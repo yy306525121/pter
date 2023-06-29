@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
  * @author yangzy
  */
 @Mapper
-public interface ConfigMapper {
+public interface SysConfigMapper {
     @Select("select * from sys_config where config_key = #{configKey}")
     SysConfig selectConfig(String configKey);
 }

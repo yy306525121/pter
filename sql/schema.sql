@@ -1,5 +1,5 @@
 -- auto-generated definition
-create table t_user
+create table sys_user
 (
     id         int auto_increment
         primary key,
@@ -53,7 +53,7 @@ create table t_client
     auto_delete_cron        varchar(32) default '0 0/1 * * * ?' comment '主动删种cron表达式，默认每分钟一次'
 ) comment '下载器表';
 
-create table t_config
+create table sys_config
 (
     id           int auto_increment primary key,
     config_name  varchar(100) default '' comment '参数名称',
@@ -64,7 +64,7 @@ create table t_config
 ) comment '参数配置表';
 
 
-create table t_menu
+create table sys_menu
 (
     id        int         not null auto_increment comment '菜单ID',
     menu_name varchar(50) not null comment '菜单名称',
@@ -86,7 +86,7 @@ create table t_menu
   auto_increment = 2000 comment = '菜单权限表';
 
 
-create table t_role
+create table sys_role
 (
     id                  bigint(20)   not null auto_increment comment '角色ID',
     role_name           varchar(30)  not null comment '角色名称',

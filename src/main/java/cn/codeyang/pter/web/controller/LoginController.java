@@ -3,6 +3,7 @@ package cn.codeyang.pter.web.controller;
 import cn.codeyang.pter.common.core.domain.model.LoginBody;
 import cn.codeyang.pter.common.core.util.R;
 import cn.codeyang.pter.common.utils.SecurityUtils;
+import cn.codeyang.pter.module.menu.entity.SysMenu;
 import cn.codeyang.pter.module.user.dto.LoginRsp;
 import cn.codeyang.pter.module.user.entity.SysUser;
 import cn.codeyang.pter.module.user.service.impl.LoginService;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author yangzy
@@ -52,11 +51,18 @@ public class LoginController {
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
-        Set<String> permissions = permissionService.getMenuPermission(user);
+        Set<SysMenu> permissions = permissionService.getMenuPermission(user);
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
         map.put("roles", roles);
         map.put("permissions", permissions);
         return R.ok(map);
+    }
+
+    @GetMapping("/permMenu")
+    public R<Set<SysMenu>> getPermmenu() {
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        Set<SysMenu> menuPermission = permissionService.getMenuPermission(user);
+        return R.ok(menuPermission);
     }
 }

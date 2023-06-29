@@ -2,7 +2,7 @@ package cn.codeyang.pter.module.config.service.impl;
 
 import cn.codeyang.pter.common.core.constant.CacheConstants;
 import cn.codeyang.pter.module.config.entity.SysConfig;
-import cn.codeyang.pter.module.config.mapper.ConfigMapper;
+import cn.codeyang.pter.module.config.mapper.SysConfigMapper;
 import cn.codeyang.pter.module.config.service.SysConfigService;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SysConfigServiceImpl implements SysConfigService {
     private final RedisTemplate<String, Object> redisTemplate;
-    private final ConfigMapper configMapper;
+    private final SysConfigMapper configMapper;
 
     @Override
     public boolean selectCaptchaEnabled() {
