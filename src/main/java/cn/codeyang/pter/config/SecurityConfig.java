@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 /**
  * spring security配置
@@ -101,7 +104,9 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .headers((header) ->
                         header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .cors(Customizer.withDefaults());
+                .cors((corsConfig) -> {
+                    corsConfig.configurationSource(getCorsConfigurationSource());
+                });
 
         // 添加Logout filter
         httpSecurity.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler));
@@ -112,6 +117,22 @@ public class SecurityConfig {
         httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
 
         return httpSecurity.build();
+    }
+
+    private UrlBasedCorsConfigurationSource getCorsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedHeader("*");
+        config.addAllowedOrigin("*");
+        config.addAllowedMethod(HttpMethod.GET);
+        config.addAllowedMethod(HttpMethod.OPTIONS);
+        config.addAllowedMethod(HttpMethod.POST);
+        config.addAllowedMethod(HttpMethod.PUT);
+        config.addAllowedMethod(HttpMethod.DELETE);
+        config.addAllowedMethod(HttpMethod.PATCH);
+        config.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     ///**
