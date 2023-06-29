@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 @Data
 @ToString
 @Mapper
-public class User implements Serializable {
+public class SysUser implements Serializable {
     private Long id;
     private String nickName;
     private String username;

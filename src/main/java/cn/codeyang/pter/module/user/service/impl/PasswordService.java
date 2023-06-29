@@ -5,7 +5,7 @@ import cn.codeyang.pter.common.exception.user.UserPasswordNotMatchException;
 import cn.codeyang.pter.common.exception.user.UserPasswordRetryLimitExceedException;
 import cn.codeyang.pter.common.utils.SecurityUtils;
 import cn.codeyang.pter.framework.security.context.AuthenticationContextHolder;
-import cn.codeyang.pter.module.user.entity.User;
+import cn.codeyang.pter.module.user.entity.SysUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,7 +40,7 @@ public class PasswordService {
         return CacheConstants.PWD_ERR_COUNT_KEY + username;
     }
 
-    public void validate(User user) {
+    public void validate(SysUser user) {
         Authentication usernamePasswordAuthenticationToken = AuthenticationContextHolder.getContext();
         String username = usernamePasswordAuthenticationToken.getName();
         String password = usernamePasswordAuthenticationToken.getCredentials().toString();
@@ -66,7 +66,7 @@ public class PasswordService {
         }
     }
 
-    public boolean matches(User user, String rawPassword) {
+    public boolean matches(SysUser user, String rawPassword) {
         return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
     }
 

@@ -3,7 +3,7 @@ package cn.codeyang.pter.web.controller;
 import cn.codeyang.pter.common.core.constant.CacheConstants;
 import cn.codeyang.pter.common.core.constant.CommonConstants;
 import cn.codeyang.pter.common.core.util.R;
-import cn.codeyang.pter.module.config.service.ConfigService;
+import cn.codeyang.pter.module.config.service.SysConfigService;
 import cn.codeyang.pter.module.user.dto.CaptchaRspDto;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class CaptchaController {
     private final RedisTemplate<String, Object> redisTemplate;
-    private final ConfigService configService;
+    private final SysConfigService configService;
     private final Producer captchaProducerMath;
     private Producer captchaProducer;
 

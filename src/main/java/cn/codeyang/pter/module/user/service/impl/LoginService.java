@@ -10,9 +10,9 @@ import cn.codeyang.pter.common.exception.user.UserPasswordNotMatchException;
 import cn.codeyang.pter.common.utils.ServletUtils;
 import cn.codeyang.pter.common.utils.ip.IpUtils;
 import cn.codeyang.pter.framework.security.context.AuthenticationContextHolder;
-import cn.codeyang.pter.module.config.service.ConfigService;
-import cn.codeyang.pter.module.user.entity.User;
-import cn.codeyang.pter.module.user.service.UserService;
+import cn.codeyang.pter.module.config.service.SysConfigService;
+import cn.codeyang.pter.module.user.entity.SysUser;
+import cn.codeyang.pter.module.user.service.SysUserService;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,9 +39,9 @@ public class LoginService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final UserService userService;
+    private final SysUserService userService;
 
-    private final ConfigService configService;
+    private final SysConfigService configService;
 
     // 是否允许账户多终端同时登录（true允许 false不允许）
     @Value("${token.soloLogin}")
@@ -124,7 +124,7 @@ public class LoginService {
      * @param userId 用户ID
      */
     public void recordLoginInfo(Long userId) {
-        User user = new User();
+        SysUser user = new SysUser();
         user.setId(userId);
         user.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         user.setLoginDate(LocalDate.now());

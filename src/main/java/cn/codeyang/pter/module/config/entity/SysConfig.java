@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Data
 @Mapper
-public class Config implements Serializable {
+public class SysConfig implements Serializable {
     private Long id;
     private String configName;
     private String configKey;

@@ -3,7 +3,7 @@ package cn.codeyang.pter.module.config.service;
 /**
  * @author yangzy
  */
-public interface ConfigService {
+public interface SysConfigService {
     boolean selectCaptchaEnabled();
 
     /**

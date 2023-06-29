@@ -1,6 +1,6 @@
 package cn.codeyang.pter.module.user.service.impl;
 
-import cn.codeyang.pter.module.user.entity.User;
+import cn.codeyang.pter.module.user.entity.SysUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +14,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PermissionService {
 
-    public Set<String> getRolePermission(User user) {
+    public Set<String> getRolePermission(SysUser user) {
         Set<String> roles = new HashSet<>();
         roles.add("admin");
         return roles;
     }
 
-    public Set<String> getMenuPermission(User user) {
+    public Set<String> getMenuPermission(SysUser user) {
         Set<String> menus = new HashSet<>();
         menus.add("*:*:*");
         return menus;

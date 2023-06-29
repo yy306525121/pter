@@ -1,6 +1,6 @@
 package cn.codeyang.pter.common.core.domain.model;
 
-import cn.codeyang.pter.module.user.entity.User;
+import cn.codeyang.pter.module.user.entity.SysUser;
 import com.alibaba.fastjson2.annotation.JSONField;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -73,17 +73,17 @@ public class LoginUser implements UserDetails {
     /**
      * 用户信息
      */
-    private User user;
+    private SysUser user;
 
     public LoginUser() {
     }
 
-    public LoginUser(User user, Set<String> permissions) {
+    public LoginUser(SysUser user, Set<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
 
-    public LoginUser(Long userId, Long deptId, String branchCode, User user, Set<String> permissions) {
+    public LoginUser(Long userId, Long deptId, String branchCode, SysUser user, Set<String> permissions) {
         this.userId = userId;
         this.deptId = deptId;
         this.branchCode = branchCode;
@@ -232,12 +232,12 @@ public class LoginUser implements UserDetails {
         this.permissions = permissions;
     }
 
-    public User getUser() {
+    public SysUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(SysUser sysUser) {
+        this.user = sysUser;
     }
 
     @Override

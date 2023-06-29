@@ -4,7 +4,7 @@ import cn.codeyang.pter.common.core.domain.model.LoginBody;
 import cn.codeyang.pter.common.core.util.R;
 import cn.codeyang.pter.common.utils.SecurityUtils;
 import cn.codeyang.pter.module.user.dto.LoginRsp;
-import cn.codeyang.pter.module.user.entity.User;
+import cn.codeyang.pter.module.user.entity.SysUser;
 import cn.codeyang.pter.module.user.service.impl.LoginService;
 import cn.codeyang.pter.module.user.service.impl.PermissionService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,7 +48,7 @@ public class LoginController {
      */
     @GetMapping("info")
     public R<Map<String, Object>> getInfo() {
-        User user = SecurityUtils.getLoginUser().getUser();
+        SysUser user = SecurityUtils.getLoginUser().getUser();
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
