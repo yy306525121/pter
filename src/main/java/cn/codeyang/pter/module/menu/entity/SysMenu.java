@@ -4,6 +4,7 @@ import lombok.Data;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author yangzy
@@ -58,14 +59,14 @@ public class SysMenu implements Serializable {
     private String isCache;
 
     /**
-     * 类型（0目录 1菜单 2按钮）
+     * 类型（M目录 C菜单 F按钮）
      */
-    private Integer menuType;
+    private String menuType;
 
     /**
      * 显示状态（0显示 1隐藏）
      */
-    private Integer visible;
+    private String visible;
 
     /**
      * 菜单状态（0显示 1隐藏）
@@ -83,4 +84,6 @@ public class SysMenu implements Serializable {
     private String icon;
 
     private String remark;
+
+    private List<SysMenu> children;
 }

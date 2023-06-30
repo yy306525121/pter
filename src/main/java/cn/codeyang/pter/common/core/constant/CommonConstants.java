@@ -43,4 +43,6 @@ public interface CommonConstants {
      * 验证码有效期（分钟）
      */
     Integer CAPTCHA_EXPIRATION = 3;
+    String HTTP = "http://";
+    String HTTPS = "https://";
 }

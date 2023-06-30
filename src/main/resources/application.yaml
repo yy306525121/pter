@@ -36,3 +36,6 @@ token:
   soloLogin: true
 pter:
   captchaType: math
+logging:
+  level:
+    root: debug

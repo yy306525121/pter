@@ -24,4 +24,8 @@ public class SysUser implements Serializable {
     private String loginIp;
 
     private LocalDate loginDate;
+
+    private String avatar;
+
+
 }

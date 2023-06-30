@@ -3,6 +3,7 @@ package cn.codeyang.pter.module.menu.service;
 import cn.codeyang.pter.module.menu.entity.SysMenu;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author yangzy
@@ -15,4 +16,14 @@ public interface SysMenuService {
      */
     List<SysMenu> findMenuByRoleId(Long roleId);
 
+    /**
+     * 根据用户ID查询权限
+     * @param userId
+     * @return
+     */
+    public Set<String> selectMenuPermsByUserId(Long userId);
+
+    List<SysMenu> selectMenuTreeAll();
+
+    List<SysMenu> selectMenuTreeByUserId(Long id);
 }
