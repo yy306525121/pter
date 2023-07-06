@@ -9,7 +9,6 @@ import cn.codeyang.pter.module.user.dto.RouterRspDto;
 import cn.codeyang.pter.module.user.entity.SysUser;
 import cn.codeyang.pter.module.user.service.impl.LoginService;
 import cn.codeyang.pter.module.user.service.impl.PermissionService;
-import cn.hutool.core.lang.tree.Tree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,9 +53,9 @@ public class LoginController {
     public R<Map<String, Object>> getInfo() {
         SysUser user = SecurityUtils.getLoginUser().getUser();
         // 角色集合
-        Set<String> roles = permissionService.getRolePermission(user);
+        Set<String> roles = permissionService.getRolePermission(user.getId());
         // 权限集合
-        Set<String> permissions = permissionService.getMenuPermission(user);
+        Set<String> permissions = permissionService.getMenuPermission(user.getId());
         Map<String, Object> map = new HashMap<>();
         map.put("user", user);
         map.put("roles", roles);

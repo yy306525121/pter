@@ -18,4 +18,6 @@ public interface SysUserService {
      * @param user
      */
     void updateUserProfile(SysUser user);
+
+    SysUser findById(Long userId);
 }

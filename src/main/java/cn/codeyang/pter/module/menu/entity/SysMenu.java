@@ -1,22 +1,21 @@
 package cn.codeyang.pter.module.menu.entity;
 
+import cn.codeyang.pter.common.core.domain.model.BaseEntity;
+import cn.codeyang.pter.module.role.entity.SysRole;
+import jakarta.persistence.*;
 import lombok.Data;
-import org.apache.ibatis.annotations.Mapper;
 
-import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author yangzy
  */
 @Data
-@Mapper
-public class SysMenu implements Serializable {
-
-    /**
-     * 菜单ID
-     */
-    private Long id;
+@Entity
+@Table(name = "sys_menu")
+public class SysMenu extends BaseEntity {
 
     /**
      * 菜单名称
@@ -26,7 +25,8 @@ public class SysMenu implements Serializable {
     /**
      * 父菜单ID
      */
-    private Long parentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SysMenu parent;
 
     /**
      * 显示顺序
@@ -85,5 +85,13 @@ public class SysMenu implements Serializable {
 
     private String remark;
 
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<SysMenu> children;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinTable(name = "sys_role_menu",
+            joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<SysRole> roles = new LinkedHashSet<>();
 }

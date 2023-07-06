@@ -6,16 +6,16 @@ import cn.codeyang.pter.common.utils.SecurityUtils;
 import cn.codeyang.pter.module.menu.entity.SysMenu;
 import cn.codeyang.pter.module.menu.service.SysMenuService;
 import cn.codeyang.pter.module.role.entity.SysRole;
-import cn.codeyang.pter.module.role.service.SysRoleService;
 import cn.codeyang.pter.module.user.dto.MetaDto;
 import cn.codeyang.pter.module.user.dto.RouterRspDto;
 import cn.codeyang.pter.module.user.entity.SysUser;
+import cn.codeyang.pter.module.user.repository.SysUserRepository;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.http.HttpUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,21 +26,38 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class PermissionService {
-    private final SysRoleService sysRoleService;
+    private final SysUserRepository userRepository;
     private final SysMenuService sysMenuService;
 
-    public Set<String> getRolePermission(SysUser user) {
-        List<SysRole> sysRoleList = sysRoleService.findRolesByUserId(user.getId());
-        return sysRoleList.stream().map(SysRole::getRoleKey).collect(Collectors.toSet());
+    @Transactional(rollbackFor = Exception.class)
+    public Set<String> getRolePermission(Long userId) {
+        Optional<SysUser> optional = userRepository.findById(userId);
+        if (optional.isPresent()) {
+            Set<SysRole> roles = optional.get().getRoles();
+            if (CollUtil.isNotEmpty(roles)) {
+                return roles.stream().map(SysRole::getRoleName).collect(Collectors.toSet());
+            }
+        }
+
+        return new HashSet<>();
     }
 
-    public Set<String> getMenuPermission(SysUser user) {
+    public Set<String> getMenuPermission(Long userId) {
         Set<String> perms = new HashSet<>();
-        if (SecurityUtils.isAdmin(user.getId())) {
-            perms.add("*:*:*");
-        } else {
-            perms.addAll(sysMenuService.selectMenuPermsByUserId(user.getId()));
+
+        Optional<SysUser> optional = userRepository.findById(userId);
+        if (optional.isPresent()) {
+            SysUser user = optional.get();
+            if (SecurityUtils.isAdmin(user.getId())) {
+                perms.add("*:*:*");
+            } else {
+                Set<SysRole> roles = user.getRoles();
+                roles.forEach(role -> {
+                    perms.addAll(role.getMenus().stream().map(SysMenu::getPerms).collect(Collectors.toSet()));
+                });
+            }
         }
+
         return perms;
     }
 
@@ -49,7 +66,7 @@ public class PermissionService {
         if (SecurityUtils.isAdmin(user.getId())) {
             menus = sysMenuService.selectMenuTreeAll();
         } else {
-            menus = sysMenuService.selectMenuTreeByUserId(user.getId());
+            menus = sysMenuService.selectMenuTreeByUser(user);
         }
         return getChildPerms(menus, 0L);
     }
@@ -66,7 +83,7 @@ public class PermissionService {
         for (Iterator<SysMenu> iterator = list.iterator(); iterator.hasNext(); ) {
             SysMenu t = iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (t.getParentId() == parentId) {
+            if (t.getParent().getId() == parentId) {
                 recursionFn(list, t);
                 returnList.add(t);
             }
@@ -106,7 +123,7 @@ public class PermissionService {
         Iterator<SysMenu> it = list.iterator();
         while (it.hasNext()) {
             SysMenu n = it.next();
-            if (n.getParentId().longValue() == t.getId().longValue()) {
+            if (n.getParent().getId().longValue() == t.getId().longValue()) {
                 tlist.add(n);
             }
         }
@@ -139,7 +156,7 @@ public class PermissionService {
                 children.setQuery(menu.getQuery());
                 childrenList.add(children);
                 router.setChildren(childrenList);
-            } else if (menu.getParentId().intValue() == 0 && isInnerLink(menu)) {
+            } else if (menu.getParent().getId().intValue() == 0 && isInnerLink(menu)) {
                 router.setMeta(new MetaDto(menu.getMenuName(), menu.getIcon()));
                 router.setPath("/");
                 List<RouterRspDto> childrenList = new ArrayList<>();
@@ -167,7 +184,7 @@ public class PermissionService {
         String component = UserConstants.LAYOUT;
         if (StringUtils.isNotEmpty(menu.getComponent()) && !isMenuFrame(menu)) {
             component = menu.getComponent();
-        } else if (StringUtils.isEmpty(menu.getComponent()) && menu.getParentId().intValue() != 0 && isInnerLink(menu)) {
+        } else if (StringUtils.isEmpty(menu.getComponent()) && menu.getParent().getId().intValue() != 0 && isInnerLink(menu)) {
             component = UserConstants.INNER_LINK;
         } else if (StringUtils.isEmpty(menu.getComponent()) && isParentView(menu)) {
             component = UserConstants.PARENT_VIEW;
@@ -182,7 +199,7 @@ public class PermissionService {
      * @return 结果
      */
     public boolean isParentView(SysMenu menu) {
-        return menu.getParentId().intValue() != 0 && UserConstants.TYPE_DIR.equals(menu.getMenuType());
+        return menu.getParent().getId().intValue() != 0 && UserConstants.TYPE_DIR.equals(menu.getMenuType());
     }
 
     /**
@@ -207,7 +224,7 @@ public class PermissionService {
      * @return 结果
      */
     public boolean isMenuFrame(SysMenu menu) {
-        return menu.getParentId().intValue() == 0 && UserConstants.TYPE_MENU.equals(menu.getMenuType())
+        return menu.getParent().getId().intValue() == 0 && UserConstants.TYPE_MENU.equals(menu.getMenuType())
                 && menu.getIsFrame().equals(UserConstants.NO_FRAME);
     }
 
@@ -220,11 +237,11 @@ public class PermissionService {
     public String getRouterPath(SysMenu menu) {
         String routerPath = menu.getPath();
         // 内链打开外网方式
-        if (menu.getParentId().intValue() != 0 && isInnerLink(menu)) {
+        if (menu.getParent().getId().intValue() != 0 && isInnerLink(menu)) {
             routerPath = innerLinkReplaceEach(routerPath);
         }
         // 非外链并且是一级目录（类型为目录）
-        if (0 == menu.getParentId().intValue() && UserConstants.TYPE_DIR.equals(menu.getMenuType())
+        if (0 == menu.getParent().getId().intValue() && UserConstants.TYPE_DIR.equals(menu.getMenuType())
                 && UserConstants.NO_FRAME.equals(menu.getIsFrame())) {
             routerPath = "/" + menu.getPath();
         }

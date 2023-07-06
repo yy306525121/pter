@@ -1,7 +1,7 @@
 package cn.codeyang.pter.module.client.service.impl;
 
 import cn.codeyang.pter.module.client.entity.Client;
-import cn.codeyang.pter.module.client.mapper.ClientMapper;
+import cn.codeyang.pter.module.client.repository.ClientRepository;
 import cn.codeyang.pter.module.client.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
-    private final ClientMapper clientMapper;
+    private final ClientRepository clientRepository;
 
     @Override
     public List<Client> selectAll() {
-        return clientMapper.selectAll();
+        return clientRepository.findAll();
     }
 }

@@ -124,8 +124,7 @@ public class LoginService {
      * @param userId 用户ID
      */
     public void recordLoginInfo(Long userId) {
-        SysUser user = new SysUser();
-        user.setId(userId);
+        SysUser user = userService.findById(userId);
         user.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         user.setLoginDate(LocalDate.now());
         userService.updateUserProfile(user);

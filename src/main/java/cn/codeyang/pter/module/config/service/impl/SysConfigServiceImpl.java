@@ -2,7 +2,7 @@ package cn.codeyang.pter.module.config.service.impl;
 
 import cn.codeyang.pter.common.core.constant.CacheConstants;
 import cn.codeyang.pter.module.config.entity.SysConfig;
-import cn.codeyang.pter.module.config.mapper.SysConfigMapper;
+import cn.codeyang.pter.module.config.repository.SysConfigRepository;
 import cn.codeyang.pter.module.config.service.SysConfigService;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author yangzy
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SysConfigServiceImpl implements SysConfigService {
     private final RedisTemplate<String, Object> redisTemplate;
-    private final SysConfigMapper configMapper;
+    private final SysConfigRepository configRepository;
 
     @Override
     public boolean selectCaptchaEnabled() {
@@ -36,10 +38,11 @@ public class SysConfigServiceImpl implements SysConfigService {
         if (StrUtil.isNotEmpty(configValue)) {
             return configValue;
         }
-        SysConfig config = configMapper.selectConfig(configKey);
-        if (config != null) {
-            redisTemplate.opsForValue().set(getCacheKey(configKey), config.getConfigValue());
-            return config.getConfigValue();
+        Optional<SysConfig> optional = configRepository.findByConfigKey(configKey);
+        if (optional.isPresent()) {
+            SysConfig sysConfig = optional.get();
+            redisTemplate.opsForValue().set(getCacheKey(configKey), sysConfig.getConfigValue());
+            return sysConfig.getConfigValue();
         }
         return StrUtil.EMPTY;
     }

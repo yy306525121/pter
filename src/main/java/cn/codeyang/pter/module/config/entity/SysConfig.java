@@ -1,17 +1,17 @@
 package cn.codeyang.pter.module.config.entity;
 
+import cn.codeyang.pter.common.core.domain.model.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.io.Serializable;
 
 /**
  * @author yangzy
  */
 @Data
-@Mapper
-public class SysConfig implements Serializable {
-    private Long id;
+@Entity
+@Table(name = "sys_config")
+public class SysConfig extends BaseEntity {
     private String configName;
     private String configKey;
     private String configValue;
