@@ -1,8 +1,8 @@
 package cn.codeyang.pter.web.controller;
 
 import cn.codeyang.pter.common.core.util.R;
-import cn.codeyang.pter.module.user.entity.SysUser;
-import cn.codeyang.pter.module.user.repository.SysUserRepository;
+import cn.codeyang.pter.module.system.entity.SysUser;
+import cn.codeyang.pter.module.system.repository.SysUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

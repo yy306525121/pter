@@ -2,14 +2,12 @@ package cn.codeyang.pter.framework.security.filter;
 
 import cn.codeyang.pter.common.core.domain.model.LoginUser;
 import cn.codeyang.pter.common.utils.SecurityUtils;
-import cn.codeyang.pter.module.user.service.impl.TokenService;
-import cn.hutool.core.util.StrUtil;
+import cn.codeyang.pter.framework.security.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
