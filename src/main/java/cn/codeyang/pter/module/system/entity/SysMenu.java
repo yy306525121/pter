@@ -3,6 +3,8 @@ package cn.codeyang.pter.module.system.entity;
 import cn.codeyang.pter.common.core.domain.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,11 +13,14 @@ import java.util.Set;
 /**
  * @author yangzy
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "sys_menu")
 public class SysMenu extends BaseEntity {
 
+
+    private static final long serialVersionUID = 3636300421654805350L;
     /**
      * 菜单名称
      */

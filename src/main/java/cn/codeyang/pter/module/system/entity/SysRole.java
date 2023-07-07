@@ -4,6 +4,8 @@ import cn.codeyang.pter.common.core.domain.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -11,16 +13,14 @@ import java.util.Set;
 /**
  * @author yangzy
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "sys_role")
 public class SysRole extends BaseEntity {
 
 
-    private static final long serialVersionUID = 4142677711076392616L;
-
-    private Long id;
+    private static final long serialVersionUID = -5119397650313795980L;
     private String roleName;
     private String roleKey;
     private Integer roleSort;

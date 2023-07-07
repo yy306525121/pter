@@ -2,13 +2,11 @@ package cn.codeyang.pter.module.system.entity;
 
 
 import cn.codeyang.pter.common.core.domain.model.BaseEntity;
-import cn.codeyang.pter.module.system.entity.SysRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -17,14 +15,13 @@ import java.util.Set;
 /**
  * @author yangzy
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "sys_user")
-@ToString
-@DynamicUpdate
 public class SysUser extends BaseEntity {
 
+    private static final long serialVersionUID = 999175960376296858L;
     private String nickName;
     private String username;
     @JsonIgnore

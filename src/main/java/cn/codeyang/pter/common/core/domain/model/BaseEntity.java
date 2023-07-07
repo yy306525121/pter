@@ -2,6 +2,8 @@ package cn.codeyang.pter.common.core.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,7 +15,8 @@ import java.time.LocalDate;
 /**
  * @author yangzy
  */
-@Data
+@Getter
+@Setter
 @MappedSuperclass
 public class BaseEntity implements Serializable {
     @Id
