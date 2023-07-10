@@ -4,21 +4,21 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: hello
     url: jdbc:mysql://localhost:3306/pter?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
   data:
     redis:
       database: 1
-      lettuce:
-        pool:
-          max-idle: 16
-          max-active: 32
-          min-idle: 8
+      timeout: 600ms
+  cache:
+    type: redis
+    redis:
+      cache-null-values: false
+      time-to-live: 300000
   messages:
     basename: i18n/messages
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  config-location: classpath:mybatis/mybatis-config.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 user:
   password:
