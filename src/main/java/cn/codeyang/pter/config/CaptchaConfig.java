@@ -14,7 +14,7 @@ import static com.google.code.kaptcha.Constants.*;
  *
  * @author ruoyi
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class CaptchaConfig {
     @Bean(name = "captchaProducer")
     public DefaultKaptcha getKaptchaBean() {

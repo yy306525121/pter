@@ -2,6 +2,7 @@ package cn.codeyang.pter.common.core.domain.model;
 
 import cn.codeyang.pter.module.user.entity.SysUser;
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

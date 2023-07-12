@@ -11,6 +11,7 @@
   {"name": "double"},
   {"name": "double[]"},
   {"name": "java.util.HashMap"},
+  {"name": "java.util.HashSet"},
   {"name": "boolean"},
   {"name": "java.lang.Number"},
   {"name": "java.lang.Double"},
