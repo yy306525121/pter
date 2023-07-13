@@ -33,6 +33,7 @@ public class SysMenu implements Serializable {
     private String permission;
     private Long parentId;
     private Integer sort;
+    private Boolean cacheable;
 
     private List<SysMenu> children;
 }
