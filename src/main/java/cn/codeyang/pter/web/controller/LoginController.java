@@ -64,9 +64,9 @@ public class LoginController {
     }
 
     @GetMapping("/getRouters")
-    public R<List<RouterRspDto>> getRouters() {
+    public R<List<SysMenu>> getRouters() {
         SysUser user = SecurityUtils.getLoginUser().getUser();
         List<SysMenu> menuPermission = permissionService.selectMenuTreeByUserId(user);
-        return R.ok(permissionService.buildMenus(menuPermission));
+        return R.ok(menuPermission);
     }
 }

@@ -45,4 +45,9 @@ public interface CommonConstants {
     Integer CAPTCHA_EXPIRATION = 3;
     String HTTP = "http://";
     String HTTPS = "https://";
+
+    /**
+     * 菜单树根节点
+     */
+    Long MENU_TREE_ROOT_ID = 0L;
 }
