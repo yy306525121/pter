@@ -2,7 +2,7 @@ package cn.codeyang.pter.web.controller;
 
 import cn.codeyang.pter.common.core.util.R;
 import cn.codeyang.pter.module.user.entity.SysUser;
-import cn.codeyang.pter.module.user.mapper.UserMapper;
+import cn.codeyang.pter.module.user.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/test")
 public class TestController {
     @Autowired
-    private UserMapper userMapper;
+    private SysUserMapper userMapper;
 
     @GetMapping("/info")
     public String info() {

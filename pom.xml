@@ -21,8 +21,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <mybatis-starter.version>3.0.2</mybatis-starter.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <hutool-all.version>5.8.16</hutool-all.version>
-        <retrofit.version>2.9.0</retrofit.version>
+        <retrofit.version>3.0.2</retrofit.version>
         <fastjson.version>2.0.25</fastjson.version>
         <jwt.version>0.11.5</jwt.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -73,8 +74,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.squareup.retrofit2</groupId>
-            <artifactId>retrofit</artifactId>
+            <groupId>com.github.lianjiatech</groupId>
+            <artifactId>retrofit-spring-boot-starter</artifactId>
             <version>${retrofit.version}</version>
         </dependency>
 
@@ -160,6 +161,21 @@
                 <exclusion>
                     <artifactId>javax.servlet-api</artifactId>
                     <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -50,4 +50,9 @@ public interface CommonConstants {
      * 菜单树根节点
      */
     Long MENU_TREE_ROOT_ID = 0L;
+
+    /**
+     * PT站的cookie缓存
+     */
+    String PT_COOKIE_PREFIX = "pt:cookie:";
 }

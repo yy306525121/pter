@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface SysUserMapper {
 
     @Select("SELECT * FROM sys_user")
     List<SysUser> list();
