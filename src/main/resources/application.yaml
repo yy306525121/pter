@@ -4,6 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
+    password: hello
     url: jdbc:mysql://localhost:3306/pter?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
   data:
     redis:
@@ -36,6 +37,25 @@ token:
   soloLogin: true
 pter:
   captchaType: math
-logging:
-  level:
-    root: debug
+
+retrofit:
+  global-converter-factories:
+    - com.github.lianjiatech.retrofit.spring.boot.core.BasicTypeConverterFactory
+    - retrofit2.converter.jackson.JacksonConverterFactory
+  global-log:
+    enable: true
+    log-level: info
+    log-strategy: basic
+  global-retry:
+    enable: false
+    interval-ms: 100 #重试间隔
+    max-retries: 2 # 最大重试次数
+    retry-rules:
+      - response_status_not_2xx
+      - occur_io_exception
+  global-timeout:
+    read-timeout-ms: 10000  # 全局读取超时配置
+    write-timeout-ms: 10000  # 全局写入超时配置
+    connect-timeout-ms: 10000  # 全局链接超时时间
+    call-timeout-ms: 0  # 全局完整调用超时时间
+  auto-set-prototype-scope-for-path-math-interceptor: true  # 自动设置PathMathInterceptor的scope为prototype
