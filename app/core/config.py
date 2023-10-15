@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     SUPERUSER: str = 'admin'
     SUPERUSER_PASSWORD: str = 'admin'
     API_V1_STR: str = '/api/v1'
+    TZ: str = 'Asia/Shanghai'
 
     @property
     def ROOT_PATH(self):
