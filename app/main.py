@@ -5,7 +5,6 @@ from fastapi import FastAPI
 from uvicorn import Config
 
 from app.core import settings
-from app.core.event import EventListener
 from app.db.init import init_db
 
 App = FastAPI()

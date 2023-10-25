@@ -71,7 +71,6 @@ class EventManager(object):
                 print(f'event: {event}')
                 self.__event_process(event)
             except Empty:
-                print(f'队列是空的')
                 pass
 
     def __event_process(self, event: EventObject):

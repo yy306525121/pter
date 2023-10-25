@@ -20,6 +20,7 @@ def init_db():
         user = User(
             username=settings.SUPERUSER,
             password=get_password_hash(settings.SUPERUSER_PASSWORD),
-            is_superuser = True,
+            is_active=True,
+            is_superuser=True,
         )
         user.create(_db)

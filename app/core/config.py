@@ -1,4 +1,5 @@
 import os
+import secrets
 from pathlib import Path
 
 from pydantic.v1 import BaseSettings
@@ -15,6 +16,14 @@ class Settings(BaseSettings):
     SUPERUSER_PASSWORD: str = 'admin'
     API_V1_STR: str = '/api/v1'
     TZ: str = 'Asia/Shanghai'
+
+    # 密钥
+    SECRET_KEY: str = secrets.token_urlsafe(32)
+
+
+
+    # token默认过期时间：7天
+    ACCESS_TOKEN_EXPIRE_MINUTES = 7 * 24 * 60
 
     @property
     def ROOT_PATH(self):
