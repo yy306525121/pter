@@ -31,7 +31,7 @@ class EventManager(object):
         # 事件对象列表
         self._event_queue = Queue()
         self._listener = {}
-        self._thread = Thread(target=self.__run)
+        self._thread = Thread(target=self.__run, daemon=True)
         self._thread.start()
 
     def publish_event(self, event_type: EventType, data: dict = None):
