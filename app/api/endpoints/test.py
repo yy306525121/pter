@@ -8,7 +8,7 @@ from app.core.event import EventType
 router = APIRouter()
 
 
-@router.get('/test', summary='测试')
+@router.get('/hello', summary='测试')
 def test() -> Any:
     event_manager.publish_event(EventType.SiteUpdate, {'name': 'zs'})
     return {'message': 'hello'}

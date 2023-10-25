@@ -68,6 +68,7 @@ class EventManager(object):
             try:
                 # 获取事件的阻塞时间为1秒，如果1s内队列中有元素，则取出，否则1s后报Empty异常
                 event = self._event_queue.get(block=True, timeout=1)
+                print(f'event: {event}')
                 self.__event_process(event)
             except Empty:
                 print(f'队列是空的')
