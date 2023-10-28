@@ -1,14 +1,14 @@
 from typing import Any
 
 from fastapi import APIRouter
+from fastapi_events.dispatcher import dispatch
 
-from app.core import event_manager
-from app.core.event import EventType
+from app.schemas.events import SiteEvents
 
 router = APIRouter()
 
 
 @router.get('/hello', summary='测试')
 def test() -> Any:
-    event_manager.publish_event(EventType.SiteUpdate, {'name': 'zs'})
+    dispatch(SiteEvents.UPDATE, payload={'site_id': 1, 'cron': 'aaaaa'})
     return {'message': 'hello'}
