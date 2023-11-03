@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 
 class SiteEvents(Enum):
+    ADD = 'site:add'
     UPDATE = 'site:update'
 
 
