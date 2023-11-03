@@ -1,3 +1,4 @@
+import os.path
 from typing import Any
 
 from fastapi import APIRouter, Depends
@@ -5,12 +6,22 @@ from fastapi_events.dispatcher import dispatch
 from sqlalchemy.orm import Session
 
 from app import schemas
+from app.core import settings
 from app.core.security import verify_token
 from app.db import get_db
 from app.db.models.site import Site
+from app.helper import SiteHelper
 from app.schemas import SiteEvents
 
 router = APIRouter()
+
+
+@router.get(path='/codes', summary='支持的站点列表', response_model=schemas.Response)
+def codes() -> Any:
+    config_list = SiteHelper.site_config_list
+    codes_list = [{'code': item.id, 'name': item.name} for item in config_list]
+    return schemas.Response(success=True, data=codes_list)
+
 
 
 @router.post(path='/add', summary='新增站点', response_model=schemas.Response)

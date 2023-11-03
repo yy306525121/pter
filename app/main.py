@@ -8,6 +8,7 @@ from uvicorn import Config
 
 from app.core import settings
 from app.db.init import init_db
+from app.helper import SiteHelper
 
 App = FastAPI()
 App.add_middleware(EventHandlerASGIMiddleware, handlers=[local_handler])
@@ -28,6 +29,7 @@ def init_routers():
 @App.on_event('startup')
 def start_module():
     init_routers()
+    SiteHelper()
 
 
 if __name__ == '__main__':
