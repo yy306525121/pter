@@ -1,1 +1,1 @@
-from .site import *
+from .flaresolverr import *

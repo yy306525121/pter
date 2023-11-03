@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 
 from app.core import settings
 
@@ -22,3 +22,10 @@ def get_db():
     finally:
         if db:
             db.close()
+
+
+class DBOper:
+    _db: Session = None
+
+    def __init__(self, db: Session = None):
+        self._db = db

@@ -10,7 +10,7 @@ from app.core import settings
 from app.core.security import verify_token
 from app.db import get_db
 from app.db.models.site import Site
-from app.helper import SiteHelper
+from app.modules.site import SiteConfigLoader
 from app.schemas import SiteEvents
 
 router = APIRouter()
@@ -18,7 +18,7 @@ router = APIRouter()
 
 @router.get(path='/codes', summary='支持的站点列表', response_model=schemas.Response)
 def codes() -> Any:
-    config_list = SiteHelper.site_config_list
+    config_list = SiteConfigLoader.site_config_list
     codes_list = [{'code': item.id, 'name': item.name} for item in config_list]
     return schemas.Response(success=True, data=codes_list)
 

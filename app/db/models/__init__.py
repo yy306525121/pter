@@ -1,7 +1,6 @@
-from typing import Any
+from typing import Any, Self
 
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Session
-from typing_extensions import Self
 
 from app.utils import StringUtils
 
