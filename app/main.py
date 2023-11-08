@@ -1,4 +1,5 @@
 import multiprocessing
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
@@ -8,9 +9,14 @@ from uvicorn import Config
 
 from app.core import settings
 from app.db.init import init_db
-from app.helper import SiteHelper
 
-App = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_routers()
+    yield
+    print('应用关闭')
+
+App = FastAPI(lifespan=lifespan)
 App.add_middleware(EventHandlerASGIMiddleware, handlers=[local_handler])
 
 Server = uvicorn.Server(
@@ -24,12 +30,6 @@ def init_routers():
     from app.api.api_v1 import api_router
     # API路由
     App.include_router(api_router, prefix=settings.API_V1_STR)
-
-
-@App.on_event('startup')
-def start_module():
-    init_routers()
-    SiteHelper()
 
 
 if __name__ == '__main__':

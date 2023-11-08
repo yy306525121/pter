@@ -1,5 +1,4 @@
 import json
-from types import Union
 from typing import Any
 
 from app.db import DBOper
