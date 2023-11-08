@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 @router.get(path='/codes', summary='支持的站点列表', response_model=schemas.Response)
-def codes() -> Any:
+async def codes() -> Any:
     config_list = SiteConfigLoader.site_config_list
     codes_list = [{'code': item.id, 'name': item.name} for item in config_list]
     return schemas.Response(success=True, data=codes_list)
@@ -25,7 +25,7 @@ def codes() -> Any:
 
 
 @router.post(path='/add', summary='新增站点', response_model=schemas.Response)
-def add_site(*, db: Session = Depends(get_db), site_req: schemas.Site, _: schemas.TokenPayload = Depends(verify_token)) -> Any:
+async def add_site(*, db: Session = Depends(get_db), site_req: schemas.Site, _: schemas.TokenPayload = Depends(verify_token)) -> Any:
     """
     新增站点
     """

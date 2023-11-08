@@ -11,7 +11,7 @@ from app.core import settings
 from app.db.init import init_db
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(App: FastAPI):
     init_routers()
     yield
     print('应用关闭')
