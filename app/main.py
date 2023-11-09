@@ -2,6 +2,7 @@ import multiprocessing
 from contextlib import asynccontextmanager
 
 import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi_events.handlers.local import local_handler
 from fastapi_events.middleware import EventHandlerASGIMiddleware
@@ -10,6 +11,12 @@ from uvicorn import Config
 from app.core import settings
 from app.db.init import init_db
 from app.scheduler import Scheduler
+
+
+def load_env():
+    if not load_dotenv(settings.CONFIG_PATH / '.env'):
+        print("Could not load .env file or it is empty. Please check if it exists and is readable.")
+        exit(1)
 
 
 @asynccontextmanager
@@ -36,6 +43,7 @@ def init_routers():
 
 
 def startup():
+    load_env()
     init_routers()
     Scheduler()
 

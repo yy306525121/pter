@@ -19,11 +19,6 @@ class Settings(BaseSettings):
 
     authjwt_secret_key: str = 'secret'
 
-    # 密钥
-    SECRET_KEY: str = secrets.token_urlsafe(32)
-
-
-
     # token默认过期时间：7天
     ACCESS_TOKEN_EXPIRE_MINUTES = 7 * 24 * 60
 
@@ -34,6 +29,10 @@ class Settings(BaseSettings):
     @property
     def CONFIG_PATH(self):
         return self.ROOT_PATH / 'config'
+
+    @property
+    def TEMP_PATH(self):
+        return self.CONFIG_PATH / 'temp'
 
 
 settings = Settings()

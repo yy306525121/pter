@@ -66,7 +66,7 @@ class SiteInfoLoader:
 
     @staticmethod
     def load_info_with_solver(solver_conf: Any, site_config: SiteConfig, site: Site):
-        solver = FlareSolverr(host=solver_conf.host, port=solver_conf.port)
+        solver = FlareSolverr(host=os.environ.get('solver_host'), port=os.environ.get('solver_port'))
         solver.request_get(url=urljoin(site_config.url, '/index.php'))
 
 
