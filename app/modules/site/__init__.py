@@ -26,7 +26,7 @@ class SiteConfigLoader(metaclass=Singleton):
     从config/site目录下加载站点配置文件
     将这些配置文件封装成SiteConfig对象并存入List中
     """
-    site_config_list: List[SiteConfig] = []
+    site_yaml_list = {}
 
     def __init__(self):
         self.site_config_path = settings.CONFIG_PATH / 'site'
@@ -38,8 +38,10 @@ class SiteConfigLoader(metaclass=Singleton):
         for filename in os.listdir(self.site_config_path):
             with open(os.path.join(self.site_config_path, filename)) as file:
                 data = yaml.load(file, Loader=yaml.FullLoader)
-                site_config = SiteConfig(id=data['id'], name=data['name'])
-                self.site_config_list.append(site_config)
+                id = data['id']
+                name = data['name']
+                site_config = SiteConfig(id=id, name=name)
+                self.site_yaml_list[id] = site_config
 
 
 class SiteInfoLoader:
@@ -48,15 +50,19 @@ class SiteInfoLoader:
     """
 
     @staticmethod
-    def load_info(site_config_id: str, db: Session):
-        site = Site.get_by_code(db, site_config_id)
+    def load_info(site_code: str, db: Session):
+        site = Site.get_by_code(db, site_code)
         conf = SystemConfigOper().get(key=SystemConfigKey.FlareSolverr)
+        site_yaml = SiteConfigLoader.site_yaml_list.get(site_code)
+        if not site_yaml:
+            print(f'未找到站点{site_code}对应的yaml文件，停止获取站点信息')
+            return
         if not conf:
             print(f'系统未配置FlareSolverr配置，系统将使用request库获取站点信息')
         else:
-            SiteInfoLoader.load_info_with_solver()
+            SiteInfoLoader.load_info_with_solver(conf, site_yaml, site)
         if not site:
-            print(f'未找到code为：{site_config_id}的站点数据，获取信息失败')
+            print(f'未找到code为：{site_code}的站点数据，获取信息失败')
 
     @staticmethod
     def load_info_with_solver(solver_conf: Any, site_config: SiteConfig, site: Site):

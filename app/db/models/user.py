@@ -10,10 +10,10 @@ class User(Base):
     username: Mapped[str] = mapped_column(String, unique=True)
     password: Mapped[str] = mapped_column(String)
     is_active: Mapped[bool] = mapped_column(Boolean, default=False)
-    is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)
+    roles: Mapped[str] = mapped_column(String)
 
     def __repr__(self) -> str:
-        return f'User(id={self.id!r}, username={self.username!r}), is_superuser={str(self.is_superuser)!r}'
+        return f'User(id={self.id!r}, username={self.username!r}), role={self.roles}'
 
     @staticmethod
     def authenticate(db: Session, username: str, password: str):

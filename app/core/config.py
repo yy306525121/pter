@@ -13,9 +13,11 @@ class Settings(BaseSettings):
     DEV: bool = os.environ.get('DEV', False)
 
     SUPERUSER: str = 'admin'
-    SUPERUSER_PASSWORD: str = 'admin'
+    SUPERUSER_PASSWORD: str = 'admin123'
     API_V1_STR: str = '/api/v1'
     TZ: str = 'Asia/Shanghai'
+
+    authjwt_secret_key: str = 'secret'
 
     # 密钥
     SECRET_KEY: str = secrets.token_urlsafe(32)

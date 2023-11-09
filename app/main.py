@@ -9,12 +9,15 @@ from uvicorn import Config
 
 from app.core import settings
 from app.db.init import init_db
+from app.scheduler import Scheduler
+
 
 @asynccontextmanager
 async def lifespan(App: FastAPI):
-    init_routers()
+    startup()
     yield
-    print('应用关闭')
+    shutdown()
+
 
 App = FastAPI(lifespan=lifespan)
 App.add_middleware(EventHandlerASGIMiddleware, handlers=[local_handler])
@@ -30,6 +33,15 @@ def init_routers():
     from app.api.api_v1 import api_router
     # API路由
     App.include_router(api_router, prefix=settings.API_V1_STR)
+
+
+def startup():
+    init_routers()
+    Scheduler()
+
+
+def shutdown():
+    pass
 
 
 if __name__ == '__main__':

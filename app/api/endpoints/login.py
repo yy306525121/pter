@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 from typing import Any
 
@@ -20,10 +21,16 @@ async def login(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestF
         raise HTTPException(status_code=401, detail='用户名密码不正确')
     elif not user.is_active:
         raise HTTPException(status_code=403, detail='用户未启用')
+    token, expire = security.create_access_token(user.id,
+                                                 expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+    roles=[]
+    if user.roles:
+        roles = json.loads(user.roles)
+
     return schemas.Token(
-        token=security.create_access_token(user.id,
-                                           expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)),
+        token=token,
+        expire=expire,
         token_type='bearer',
-        super_user=user.is_superuser,
+        roles=roles,
         username=user.username
     )

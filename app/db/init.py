@@ -21,6 +21,6 @@ def init_db():
             username=settings.SUPERUSER,
             password=get_password_hash(settings.SUPERUSER_PASSWORD),
             is_active=True,
-            is_superuser=True,
+            roles='["admin"]'
         )
         user.create(_db)

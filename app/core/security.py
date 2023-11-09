@@ -27,7 +27,7 @@ reusable_oauth2 = OAuth2PasswordBearer(
 
 def create_access_token(
         subject: Union[str, Any], expires_delta: timedelta = None
-) -> str:
+) -> (str, int):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
@@ -36,7 +36,7 @@ def create_access_token(
         )
     to_encode = {"exp": expire, "sub": str(subject)}
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
+    return encoded_jwt, int(expire.timestamp())
 
 
 def verify_token(token: str = Depends(reusable_oauth2)) -> schemas.TokenPayload:
